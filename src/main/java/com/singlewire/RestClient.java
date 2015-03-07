@@ -121,17 +121,6 @@ public class RestClient {
     }
 
     /**
-     * Creates a lazy {@link java.util.Iterator} to page through the resource at the given path
-     *
-     * @param resource the resource to paginate
-     * @return a lazy {@link java.util.Iterator} of {@link us.monoid.json.JSONObject}
-     * @throws IOException
-     */
-    public Iterator<JSONObject> list(Resource resource) throws IOException {
-        return this.list(resource.builder().build());
-    }
-
-    /**
      * GET the URI and parse the result as JSON
      *
      * @param path the path to use
@@ -140,17 +129,6 @@ public class RestClient {
      */
     public JSONResource json(String path) throws IOException {
         return resty.json(baseUrl + path);
-    }
-
-    /**
-     * GET the URI and parse the result as JSON
-     *
-     * @param resource the resource to use
-     * @return the json resource
-     * @throws IOException
-     */
-    public JSONResource json(Resource resource) throws IOException {
-        return this.json(resource.builder().build());
     }
 
     /**
@@ -166,18 +144,6 @@ public class RestClient {
     }
 
     /**
-     * POST/PUT to a URI and parse the result as JSON
-     *
-     * @param resource the resource to use
-     * @param content  the content to POST/PUT to the URI
-     * @return the json resource
-     * @throws IOException
-     */
-    public JSONResource json(Resource resource, AbstractContent content) throws IOException {
-        return this.json(resource.builder().build(), content);
-    }
-
-    /**
      * GET the URI and parse the result as text
      *
      * @param path the path to use
@@ -186,17 +152,6 @@ public class RestClient {
      */
     public TextResource text(String path) throws IOException {
         return resty.text(baseUrl + path);
-    }
-
-    /**
-     * GET the URI and parse the result as text
-     *
-     * @param resource the resource to use
-     * @return the text resource
-     * @throws IOException
-     */
-    public TextResource text(Resource resource) throws IOException {
-        return this.text(resource.builder().build());
     }
 
     /**
@@ -212,18 +167,6 @@ public class RestClient {
     }
 
     /**
-     * POST/PUT to a URI and parse the result as text
-     *
-     * @param resource the resource to use
-     * @param content  the content to POST/PUT to the URI
-     * @return the text resource
-     * @throws IOException
-     */
-    public TextResource text(Resource resource, AbstractContent content) throws IOException {
-        return this.text(resource.builder().build(), content);
-    }
-
-    /**
      * GET the URI and get the resource as binary resource.
      *
      * @param path the path to send to
@@ -232,17 +175,6 @@ public class RestClient {
      */
     public BinaryResource bytes(String path) throws IOException {
         return resty.bytes(baseUrl + path);
-    }
-
-    /**
-     * GET the URI and get the resource as binary resource.
-     *
-     * @param resource the resource to send to
-     * @return a binary resource
-     * @throws IOException
-     */
-    public BinaryResource bytes(Resource resource) throws IOException {
-        return this.bytes(resource.builder().build());
     }
 
     /**
@@ -255,18 +187,6 @@ public class RestClient {
      */
     public BinaryResource bytes(String path, AbstractContent content) throws IOException {
         return resty.bytes(baseUrl + path, content);
-    }
-
-    /**
-     * POST/PUT to the URI and get the resource as binary resource.
-     *
-     * @param resource the resource to send to
-     * @param content  the content to send
-     * @return a binary resource
-     * @throws IOException
-     */
-    public BinaryResource bytes(Resource resource, AbstractContent content) throws IOException {
-        return this.bytes(resource.builder().build(), content);
     }
 
     /**

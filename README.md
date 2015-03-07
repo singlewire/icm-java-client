@@ -4,7 +4,7 @@ A simple, easy to use REST client based on [Resty](https://github.com/beders/Res
 
 ## Installation
 
-Place the following in your pom file
+Place the following in your pom file and you're ready to rock and roll!
 
 ```xml
 <dependency>
@@ -32,11 +32,11 @@ Have fun!
 
 ```java
 // Get first page of users
-icmClient.json(Resource.USERS);
+icmClient.json(users());
 
 // Paginate through all users
-Iterator<JSONObject> users = icmClient.list(Resource.USERS);
-while(users.hasNext()) {
+Iterator<JSONObject> users = icmClient.list(users());
+while (users.hasNext()) {
     System.out.println("Fetched user with name " + users.next().getString("name"));
 }
 
@@ -44,22 +44,23 @@ while(users.hasNext()) {
 Map<String, String> query = new HashMap<String, String>();
 query.put("limit", "10");
 query.put("q", "Jim");
-icmClient.json(Resource.USERS.withQuery(query).build());
+icmClient.json(users() + urlEncode(query));
 
 // Get a specific user
-icmClient.json(Resource.USERS.withIds("de7b51a0-5a1e-11e4-ab31-8a1d033dd637").build());
+icmClient.json(user("de7b51a0-5a1e-11e4-ab31-8a1d033dd637"));
 
 // Get a specific user's devices
-icmClient.json(Resource.USER_DEVICES.withIds("de7b51a0-5a1e-11e4-ab31-8a1d033dd637").build());
+icmClient.json(userDevices("de7b51a0-5a1e-11e4-ab31-8a1d033dd637"));
 
 // Create a user
-JSONObject user = icmClient.json(Resource.USERS, form(data("name", "Jim Bob"), data("email", "jim.bob2@aol.com"))).toObject();
+JSONObject createdUser = icmClient.json(users(), form(data("name", "Jim Bob"), data("email", "jim.bob2@aol.com"))).toObject();
+String createdUserId = createdUser.getString("id");
 
 // Update the created user
-icmClient.json(Resource.USERS.withIds(user.getString("id")).build(), put(content(new JSONObject().put("name", "Jim Bob The Second"))));
+icmClient.json(user(createdUserId), put(content(new JSONObject().put("name", "Jim Bob The Second"))));
 
 // Delete the updated user
-icmClient.json(Resource.USERS.withIds(user.getString("id")).build(), delete());
+icmClient.json(user(createdUserId), delete());
 ```
 
 ## License
