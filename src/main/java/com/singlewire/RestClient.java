@@ -1,5 +1,6 @@
 package com.singlewire;
 
+import org.apache.log4j.Logger;
 import us.monoid.json.JSONArray;
 import us.monoid.json.JSONException;
 import us.monoid.json.JSONObject;
@@ -12,12 +13,14 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Queue;
 
+
 /**
  * REST Client for InformaCast Mobile that acts as a lightweight wrapper around Resty.
  *
  * @author vincent
  */
 public class RestClient {
+    private static final Logger log = Logger.getLogger(RestClient.class);
     /**
      * The base url of the InformaCast Mobile REST API
      */
@@ -77,6 +80,7 @@ public class RestClient {
             throw new IOException("Failed to parse uri", e);
         }
         final String pathToUse = pathBuilder.toString();
+        log.info("list() pathToUse='" + pathToUse + "'");
         return new Iterator<JSONObject>() {
             private boolean started = false;
             private String nextToken = null;
@@ -104,6 +108,7 @@ public class RestClient {
             public synchronized void remove() {
                 // no op
             }
+
             @Override
             public synchronized boolean hasNext() {
                 try {
@@ -140,6 +145,9 @@ public class RestClient {
      * @throws IOException
      */
     public JSONResource json(String path) throws IOException {
+        if (log.isDebugEnabled()) {
+            log.debug("json(" + path + ")");
+        }
         return resty.json(baseUrl + path);
     }
 
@@ -152,6 +160,9 @@ public class RestClient {
      * @throws IOException
      */
     public JSONResource json(String path, AbstractContent content) throws IOException {
+        if (log.isDebugEnabled()) {
+            log.debug("json with content(" + path + ")");
+        }
         return resty.json(baseUrl + path, content);
     }
 
@@ -163,6 +174,9 @@ public class RestClient {
      * @throws IOException
      */
     public TextResource text(String path) throws IOException {
+        if (log.isDebugEnabled()) {
+            log.debug("text(" + path + ")");
+        }
         return resty.text(baseUrl + path);
     }
 
@@ -175,6 +189,9 @@ public class RestClient {
      * @throws IOException
      */
     public TextResource text(String path, AbstractContent content) throws IOException {
+        if (log.isDebugEnabled()) {
+            log.debug("text with content(" + path + ")");
+        }
         return resty.text(baseUrl + path, content);
     }
 
@@ -186,6 +203,9 @@ public class RestClient {
      * @throws IOException
      */
     public BinaryResource bytes(String path) throws IOException {
+        if (log.isDebugEnabled()) {
+            log.debug("bytes(" + path + ")");
+        }
         return resty.bytes(baseUrl + path);
     }
 
@@ -198,7 +218,11 @@ public class RestClient {
      * @throws IOException
      */
     public BinaryResource bytes(String path, AbstractContent content) throws IOException {
-        return resty.bytes(baseUrl + path, content);
+        if (log.isDebugEnabled()) {
+            log.debug("bytes with content (" + path + ")");
+        }
+        BinaryResource out = resty.bytes(baseUrl + path, content);
+        return out;
     }
 
     /**
@@ -236,11 +260,14 @@ public class RestClient {
      * @param aValue  the value
      */
     public void withHeader(String aHeader, String aValue) {
+        if (log.isDebugEnabled()) {
+            log.debug("withHeader(" + aHeader + "," + aValue + ")");
+        }
         resty.withHeader(aHeader, aValue);
     }
 
     /**
-     * Don't send a header that was formely added in the alwaysSend method.
+     * Don't send a header that was formerly added in the alwaysSend method.
      *
      * @param aHeader the header to remove
      */

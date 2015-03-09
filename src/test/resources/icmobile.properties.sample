@@ -1,0 +1,11 @@
+# provide your access token to the api service.
+accessToken=
+
+# base URL of the api service, note, you are going to need the /api/v1-DEV
+baseUrl=https://api.icmobile.singlewire.com/api/v1-DEV
+
+# default message template to use for unit tests.
+messageTemplateId=c457c140-29e2-11e3-983d-2a16fa5e656f
+
+# default distribution list to use for unit tests.
+distributionListIds=
