@@ -101,6 +101,10 @@ public class RestClient {
             }
 
             @Override
+            public synchronized void remove() {
+                // no op
+            }
+            @Override
             public synchronized boolean hasNext() {
                 try {
                     if (!started) {
