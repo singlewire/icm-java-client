@@ -1,6 +1,7 @@
 package com.singlewire;
 
 import us.monoid.json.JSONArray;
+import us.monoid.json.JSONException;
 import us.monoid.json.JSONObject;
 import us.monoid.web.*;
 
@@ -81,16 +82,21 @@ public class RestClient {
             private String nextToken = null;
             private Queue<JSONObject> currentPage = new ArrayDeque<JSONObject>();
 
-            private synchronized void loadNextPage() throws Exception {
+            private synchronized void loadNextPage() throws IOException, JSONException {
                 StringBuilder pathBuilder = new StringBuilder(baseUrl + pathToUse);
                 if (nextToken != null && !nextToken.isEmpty()) {
                     pathBuilder.append("&start=").append(UrlEncodeUtils.encode(nextToken));
                 }
-                JSONObject page = resty.json(pathBuilder.toString()).toObject();
-                nextToken = page.isNull("next") ? null : page.getString("next");
-                JSONArray resources = page.getJSONArray("data");
-                for (int i = 0; i < resources.length(); i++) {
-                    currentPage.add(resources.getJSONObject(i));
+                JSONResource json = resty.json(pathBuilder.toString());
+                if (json.status(200)) {
+                    JSONObject page = json.toObject();
+                    nextToken = page.isNull("next") ? null : page.getString("next");
+                    JSONArray resources = page.getJSONArray("data");
+                    for (int i = 0; i < resources.length(); i++) {
+                        currentPage.add(resources.getJSONObject(i));
+                    }
+                } else {
+                    throw new PaginationFailedException(json);
                 }
             }
 
@@ -104,8 +110,10 @@ public class RestClient {
                     if (currentPage.isEmpty() && nextToken != null && !nextToken.isEmpty()) {
                         loadNextPage();
                     }
-                } catch (Exception e) {
+                } catch (IOException e) {
                     throw new RuntimeException("Failed to query next resource page", e);
+                } catch (JSONException e) {
+                    throw new RuntimeException("Failed to process query results", e);
                 }
                 return !currentPage.isEmpty();
             }

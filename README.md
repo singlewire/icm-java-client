@@ -25,7 +25,7 @@ import com.singlewire.RestClient;
 Create an instance of the client.
 
 ```java
-RestClient icmClient = new RestClient('<My Access Token>')
+RestClient icmClient = new RestClient("<My Access Token>");
 ```
 
 Have fun!
@@ -53,7 +53,7 @@ icmClient.json(user("de7b51a0-5a1e-11e4-ab31-8a1d033dd637"));
 icmClient.json(userDevices("de7b51a0-5a1e-11e4-ab31-8a1d033dd637"));
 
 // Create a user
-JSONObject createdUser = icmClient.json(users(), form(data("name", "Jim Bob"), data("email", "jim.bob2@aol.com"))).toObject();
+JSONObject createdUser = icmClient.json(users(), form(data("name", "Jim Bob"), data("email", "jim.bob@aol.com"))).toObject();
 String createdUserId = createdUser.getString("id");
 
 // Update the created user
