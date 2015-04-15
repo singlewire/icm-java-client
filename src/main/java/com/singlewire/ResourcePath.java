@@ -178,7 +178,7 @@ public class ResourcePath {
         return distributionList(distributionListId) + "/user-subscriptions";
     }
 
-    public static String distributionListUserSubscriptions(String distributionListId, String id) {
+    public static String distributionListUserSubscription(String distributionListId, String id) {
         return distributionListUserSubscriptions(distributionListId) + "/" + id;
     }
 
@@ -219,7 +219,7 @@ public class ResourcePath {
     }
 
     public static String reports() {
-        return "/report";
+        return "/reports";
     }
 
     public static String report(String id) {
