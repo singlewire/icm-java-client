@@ -3,7 +3,7 @@
 
     <groupId>com.singlewire</groupId>
     <artifactId>icm-java-client</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>icm-java-client</name>
@@ -13,7 +13,7 @@
         <connection>scm:git:https://github.com/singlewire/icm-java-client.git</connection>
         <developerConnection>scm:git:git@github.com:singlewire/icm-java-client.git</developerConnection>
         <url>https://github.com/singlewire/icm-java-client</url>
-        <tag>icm-java-client-0.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
