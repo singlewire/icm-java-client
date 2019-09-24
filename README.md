@@ -1,3 +1,7 @@
+# DEPRECATION NOTICE
+
+This library is now deprecated and no longer maintained. We recommend using a popular and active Java HTTP client such as [Apache HttpClient](https://hc.apache.org).
+
 # InformaCast Mobile REST Java Client
 
 A simple, easy to use REST client based on [Resty](https://github.com/beders/Resty)
